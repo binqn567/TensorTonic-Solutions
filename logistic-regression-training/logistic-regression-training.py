@@ -11,21 +11,18 @@ def train_logistic_regression(X: np.ndarray, y: np.ndarray, lr: float = 0.1, ste
     Returns the trained weights and bias as (w, b).
     """
     # Write code here
-    n , m = X.shape 
-    w = np.zeros(m)
-    b = 0.0
+    n = X.shape[0] 
+    m = X.shape[1] 
 
-    for i in range(steps):
-        z = X @ w + b 
-        p = _sigmoid(z)
+    W = np.zeros(m)
+    b = 0.0 
 
-        error = p - y 
-
-        grad_w = ( X.T @ error ) / n 
-        grad_b = np.mean(error)
-
-        w -= lr * grad_w 
+    for i in range( steps ) : 
+        p = _sigmoid( X @ W  + b )
+        grad_w = X.T @ ( p - y ) / n 
+        grad_b = np.mean( p - y )
+        W -= lr * grad_w 
         b -= lr * grad_b 
 
-    return w , float(b)
+    return W , float(b)
     pass
